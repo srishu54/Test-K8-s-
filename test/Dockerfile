@@ -7,6 +7,6 @@ RUN yum install httpd -y && yum clean all
 
 COPY index.html /var/www/html/ 
 
-EXPOSE 80 
+EXPOSE 80 443 
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
