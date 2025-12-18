@@ -1,38 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: apache
   namespace: test
 spec:
   replicas: 2
   selector:
      matchLabels:
-      app: wordpress
+      app: apache
   template:
    metadata:
     labels:
-     app: wordpress
+     app: apache
    spec:
+    imagePullSecrets:
+     - name: dhpasswd
     containers:
-     - name: wordpress
-       image: wordpress:latest
+     - name: apache
+       image: srishu54/my-repo:BUILD_NUMBER
        ports:
         - containerPort: 80
-       env:
-        - name: WORDPRESS_DB_HOST
-          value: mydb-service.test.svc.cluster.local:3306
-        - name: WORDPRESS_DB_USER
-          valueFrom:
-            configMapKeyRef:
-               name: user-info
-               key: username 
-        - name: WORDPRESS_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-info
-              key: password
-        - name: WORDPRESS_DB_NAME
-          valueFrom:
-            configMapKeyRef:
-               name: db-name
-               key: database
+        
